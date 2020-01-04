@@ -1,0 +1,92 @@
+﻿.btn {
+    margin-top:20px
+}
+
+.btn btn-success{
+
+    margin: 10px 0px 10px 0px;
+}
+
+.btn btn-danger {
+        margin: 10px 0px 10px 0px;
+}
+
+table.sorting tr:not(.home) {
+    cursor: pointer;
+}
+
+.ui-state-highlight {
+
+    border: 1px dashed #ccc;
+}
+
+
+div.new_cat{
+    margin-top:30px;
+    position: relative;
+}
+
+span.ajax-text{
+    display:none;
+}
+
+table.sorting.categories td {
+
+    padding:20px !important;
+
+}
+
+.ajax-div-td{
+
+    position:absolute;
+}
+
+span.loader {
+    display: none;
+}
+
+span.ajaxmsg {
+    background: green;
+    padding: 10px;
+    color: white;
+    display: none;
+    position: absolute;
+    bottom: 0;
+}
+
+.ajaxcart{
+    position:relative;
+    top:5px;
+}
+
+.ib{
+    display:inline-block;
+}
+
+ul.adminarea{
+    position:relative;
+    top:15px;
+}
+
+.ajaxbg{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-color:white;
+    display:none
+
+}
+
+.ajaxbg span{
+    position:absolute;
+    top:30%;
+    left:50%;
+    z-index:1;
+    
+
+}
+form.paypalform{
+    position:absolute;
+    left:-2000px;
+
+}

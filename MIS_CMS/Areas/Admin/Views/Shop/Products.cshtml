@@ -1,0 +1,141 @@
+﻿@model IEnumerable<MIS_CMS.Models.ViewModels.Shop.ProductVM>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+@using PagedList.Mvc;
+@using PagedList;
+
+<h2>Products</h2>
+
+@if (TempData["SM"] != null)
+{
+    <div class="alert alert-success">
+        <p>
+            @TempData["SM"]
+        </p>
+    </div>
+
+}
+
+<select id="SelectCategory" name="SelectCategory">
+    <option value="0">All</option>
+    @foreach (var item in ViewBag.Categories)
+    {
+        if (ViewBag.SelectedCat == item.Value)
+        {
+            <option selected="selected" value="@item.Value">@item.Text</option>
+        }
+        else
+        {
+            <option value="@item.Value">@item.Text</option>
+        }
+
+    }
+
+</select>
+<br /><br />
+
+<p>
+    @Html.ActionLink("Add New Product", "AddProduct",new { },new  { @class="btn btn-success"})
+</p>
+<table class="table table-hover table-responsive table-condensed">
+    <tr>
+        <th>
+            Name
+        </th>
+
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+
+        <th>
+            Image
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var product in ViewBag.OnePageOfProducts)
+    {
+        <tr>
+            <td>@product.Name</td>
+            <td>@product.Description</td>
+            <td>$@product.Price</td>
+            <td>
+                <a href="/admin/shop/EditProduct/@product.Id">
+                    <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.ImageName" />
+                </a>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditProduct", new { id = product.Id }, new { @class = "btn btn-primary" }) |
+
+                @Html.ActionLink("Delete", "DeleteProduct", new { id = product.Id }, new { @class = "btn btn-danger delete" })
+            </td>
+        </tr>
+
+    }
+
+
+</table>
+
+@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Products", new { page, catId = ViewBag.SelectedCat }))
+
+
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js">
+
+
+    </script>
+
+    <script>
+
+
+        $(function () {
+
+
+            /*
+           * Select products from specified category
+           */
+
+            $("#SelectCategory").on("change", function () {
+
+                var URL = $(this).val();
+
+                if (URL) {
+                    window.location = "/admin/shop/Products?catId=" + URL;
+                }
+                return false;
+
+            })
+
+
+            $("a.delete").click(function () {
+
+                if (!confirm("Confirm Delete?")) {
+
+
+                    return false;
+                }
+
+
+
+
+            });
+
+
+
+
+
+
+        });
+
+
+
+    </script>
+}

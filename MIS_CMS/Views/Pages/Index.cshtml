@@ -1,0 +1,10 @@
+﻿
+
+@{
+    ViewBag.Title = ViewBag.PageTitle;
+    TempData["PageTitle"] = ViewBag.PageTitle;
+
+}
+<h1 class="text-uppercase">@ViewBag.Title</h1>
+
+@Html.Raw(Model.Body)

@@ -1,0 +1,137 @@
+﻿@model IEnumerable<MIS_CMS.Models.ViewModels.Pages.PageVM>
+
+@{
+    ViewBag.Title = "Pages";
+}
+
+    <div class="row">
+        <div class="col col-lg-8 col-md-8 col-sm-10 col-lg-offset-2 col-md-offset-2">
+            <h2 class="text-capitalize">Pages</h2>
+            @if (TempData["SM"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SM"]
+                </div>
+
+            }
+            <p>
+                @Html.ActionLink("Add New Page", "AddPage",new { },new { @class="btn btn-success"})
+            </p>
+
+            @if (!Model.Any())
+            {
+                <h1 class="text-center">There are no pages.</h1>
+            }
+            else
+            {
+
+                <table class="table sorting table-responsive table-condensed table-hover" id="pages">
+                    <tr class="home">
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Slug
+                        </th>
+
+                        <th>
+                            Sidebar
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr id="id_@item.Id" class="@item.Slug">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Slug)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HasSidebar)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditPage", new { id = item.Id }, new { @class = "btn btn-primary" }) 
+                                @Html.ActionLink("Details", "DetailsPage", new { id = item.Id }, new { @class = "btn btn-info" }) 
+                                @if (item.Slug != "home")
+                                {
+                                    @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new { @class = "delete btn btn-danger" })
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            
+}
+
+            </div>
+        </div>
+
+            
+
+@section Scripts{
+    
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js">
+
+
+           </script>
+    
+    <script>
+
+           var div = $("div.alert");
+        if (div != null) {
+            setTimeout(function () {
+
+            div.fadeOut("slow");
+        },3000);
+        }
+         
+        
+
+        $(function () {
+
+         
+
+
+       
+
+            $("a.delete").click(function(){
+
+                if (!confirm("Confirm Delete?")) {
+                    
+
+                    return false;
+                }
+
+            
+
+
+            })
+
+            $("table#pages tbody").sortable({
+                items: "tr:not(.home)",
+                placeholder: "ui-state-highlight",
+                update: function () {
+                    var ids = $("table#pages tbody").sortable("serialize");
+                    var url = "/Admin/Pages/ReorderPages";
+
+                    $.post(url, function (data) {
+
+                    })
+                    console.log(ids);
+
+                }
+
+            })
+
+        });
+
+
+
+    </script>
+
+}    
